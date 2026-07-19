@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IBUKI // Anything Service</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Noto Sans JP",sans-serif;
+
+-webkit-tap-highlight-color: transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+    scroll-padding-top: 80px;
+}
+
+body{
+
+background:
+linear-gradient(rgba(10,10,10,.9),rgba(10,10,10,.9)),
+url("https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80");
+
+background-size:cover;
+background-attachment:fixed;
+color:white;
+
+}
+
+header{
+
+height:100vh;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+
+}
+
+h1{
+
+font-size:60px;
+letter-spacing:10px;
+color:#ff4da6;
+
+text-shadow:
+0 0 15px #ff4da6;
+
+}
+
+.subtitle{
+
+margin-top:20px;
+font-size:20px;
+opacity:.8;
+
+}
+
+button{
+
+margin-top:40px;
+
+padding:15px 40px;
+
+border:none;
+
+border-radius:50px;
+
+background:#ff4da6;
+
+color:white;
+
+font-size:18px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+transform:scale(1.05);
+
+}
+
+section{
+
+padding:40px 10%;
+
+}
+
+.card{
+
+background:rgba(255,255,255,.05);
+
+backdrop-filter:blur(10px);
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:25px;
+
+padding:30px;
+
+margin-bottom:30px;
+
+}
+
+h2{
+
+color:#ff4da6;
+
+margin-bottom:20px;
+
+}
+
+ul{
+
+line-height:2;
+
+}
+
+footer{
+
+padding:40px;
+
+text-align:center;
+
+opacity:.5;
+
+}
+
+#bone{
+
+position:fixed;
+
+bottom:20px;
+
+right:20px;
+
+width:70px;
+
+height:70px;
+
+border-radius:100px;
+
+font-size:30px;
+
+background:#ff4da6;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+cursor:pointer;
+
+box-shadow:0 0 20px #ff4da6;
+
+transition:.3s;
+
+
+-webkit-tap-highlight-color: transparent;
+user-select: none;
+outline: none;
+
+}
+
+#bone:hover{
+
+transform:rotate(15deg) scale(1.1);
+
+}
+
+#message{
+
+position:fixed;
+
+bottom:110px;
+
+right:20px;
+
+background:#222;
+
+padding:15px 20px;
+
+border-radius:20px;
+
+display:none;
+
+}
+
+.fade{
+    opacity:0;
+    transform:translateY(60px);
+    transition:0.8s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ===========================
+   固定メニュー
+=========================== */
+
+#navbar{
+
+position:fixed;
+
+top:15px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:92%;
+
+display:flex;
+
+justify-content:space-between;
+align-items:center;
+
+padding:15px 22px;
+
+background:rgba(30,30,30,.45);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+z-index:999;
+
+transition:.35s;
+
+}
+
+#navbar:hover{
+
+background:rgba(40,40,40,.7);
+
+box-shadow:0 0 25px rgba(255,80,170,.35);
+
+}
+
+.logo{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#ff4da6;
+
+letter-spacing:2px;
+
+text-shadow:0 0 10px #ff4da6;
+
+}
+
+.menu{
+
+display:flex;
+
+gap:25px;
+
+}
+
+.menu a{
+
+color:white;
+
+text-decoration:none;
+
+transition:.3s;
+
+font-size:15px;
+
+}
+
+.menu a:hover{
+
+color:#ff4da6;
+
+text-shadow:0 0 10px #ff4da6;
+
+}
+
+.status{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+font-size:13px;
+
+opacity:.85;
+
+}
+
+.dot{
+
+width:10px;
+
+height:10px;
+
+background:#37ff70;
+
+border-radius:50%;
+
+box-shadow:0 0 10px #37ff70;
+
+animation:pulse 1.4s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+50%{
+
+transform:scale(1.4);
+
+opacity:.5;
+
+}
+
+100%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+
+
+@media (max-width:768px){
+
+
+
+#navbar{
+    padding:15px;
+}
+
+.logo{
+    font-size:18px;
+    margin-right:40px; 
+  
+}
+
+.menu{
+    display:flex;
+    gap:14px;
+    flex:1;              
+}
+
+.menu a{
+
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+    font-size:15px;
+
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
+
+}
+
+}
+
+
+
+/* 骨が降るアニメーション */
+.bone-fall {
+    position: fixed;
+    top: -50px;
+    font-size: 30px;
+    z-index: 1000;
+    pointer-events: none;
+    animation: fall 2s linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+
+
+
+
+/* 夜のダークモード */
+body.night-mode {
+    filter: hue-rotate(200deg) brightness(0.8); /* 少し青みがかって落ち着いた色に */
+}
+
+
+
+
+
+
+
+
+
+</style>
+
+</head>
+
+<body>
+  
+  <nav id="navbar">
+
+<div class="logo" id="moon">🌙</div>
+
+    <div class="menu">
+
+        <a href="#profile">Profile</a>
+        <a href="#price">Price</a>
+        <a href="#contact">Contact</a>
+
+
+    </div>
+
+    <div class="status">
+
+        <span class="dot"></span>
+
+        ONLINE
+
+    </div>
+
+</nav>
+  
+  
+  
+
+<header>
+
+<h1></h1>
+
+どんな依頼でもよろこんでやりまーす！
+
+<p class="subtitle">
+
+なんでも屋イブキ
+
+<br><br>
+
+
+
+</p>
+
+<button onclick="document.getElementById('profile').scrollIntoView({behavior:'smooth'})">
+
+詳細
+
+</button>
+
+</header>
+
+
+
+<section id="profile" class="fade">
+    <div class="card">
+       <h2>🐺 プロフィール</h2>
+       <ul>
+           <li>名前：冴喰 イブキ</li>
+           <li>職業：何でも屋</li>
+           <li>年齢：ヒミツ！</li>
+           <li>身長：184cm（たぶん…）</li>
+           <li>好き：肉・昼寝・お小遣い</li>
+           <li>嫌い：空腹</li>
+           <li>特技：護衛・追跡・探し物</li>
+       </ul>
+       </div>
+</section>
+
+
+
+<section id="price" class="fade">
+    <div class="card">
+       <h2>💰 価格</h2>
+       <ul>
+           <li>荷物運び　¥5,000〜</li>
+           <li>探し物　¥8,000〜</li>
+           <li>護衛　¥30,000〜</li>
+           <li>その他　要相談</li>
+       </ul>
+    </div>
+</section> 
+
+
+
+<section id="track-record" class="fade">
+    <div class="card">
+        <h2>⭐ 実績</h2>
+        <ul>
+            <li>依頼達成数：68件</li>
+            <li>護衛成功率：100%</li>
+            <li>探し物成功率：98%</li>
+        </ul>
+    </div>
+</section>
+
+
+
+
+<section id="contact" class="fade">
+      <div class="card">
+         <h2>📞電話</h2>
+         <p>
+
+仕事の依頼は
+
+ここから！　　　　　
+
+XXX-XXXX-XXXX
+
+         </p>
+         </div>
+</section>
+
+
+
+<section id="sponsor" class="fade">
+    <div class="card">
+    <h2>🩷 スポンサー</h2>
+    <p>
+Special Thanks
+    <br><br>
+○○家
+
+<br><br>
+
+  <p style="font-size: 12px; opacity: 0.6; margin-top: 10px;">坊ちゃんいつもありがとーございます！</p>
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section id="support" class="fade">
+<div class="card">
+    <h2>おやつカンパ（累計：<span id="total-amount">0</span>円）</h2>
+    <p id="ibuki-comment">「おなかぺこぺこなんです……　　おやつ代くれませんか！」</p>
+  <p style="font-size: 12px; opacity: 0.6; margin-top: 10px;">※リアルマネー不要！</p>
+  
+    
+    <div style="margin-top: 20px;">
+        <button id="donate-btn" onclick="donate()" style="background: #37ff70; color: #000; font-weight: bold; padding: 15px 30px; border: none; border-radius: 50px; cursor: pointer;">
+            おやつ代を贈る（¥500）
+        </button>
+    </div>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+
+IBUKI // Anything Service
+
+</footer>
+
+<div id="bone">
+🦴
+</div>
+
+<div id="message">
+
+わん！！
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+function donate() {
+    let currentTotal = parseInt(localStorage.getItem('ibukiTotal') || 0);
+    currentTotal += 500;
+    localStorage.setItem('ibukiTotal', currentTotal);
+    localStorage.setItem('lastDonateDate', new Date().toLocaleDateString());
+    
+    // 骨を降らせる演出
+    for(let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            const bone = document.createElement("div");
+            bone.innerHTML = "🦴";
+            bone.className = "bone-fall";
+            bone.style.left = Math.random() * 100 + "vw";
+            document.body.appendChild(bone);
+            setTimeout(() => bone.remove(), 2000);
+        }, i * 200);
+    }
+
+    // 1. まず累計額を表示
+    document.getElementById("total-amount").innerHTML = currentTotal.toLocaleString();
+    
+    // 2. セリフを表示する要素を取得
+    const comment = document.getElementById("ibuki-comment");
+    
+    // 累計額に応じたメッセージ変化
+    if (currentTotal === 500) {
+        comment.innerHTML = "「ありがとうございます！これでおやつ食べます！」";
+    } else if (currentTotal <= 1000) {
+        comment.innerHTML = "「また！？太っ腹ですね！…あ、でももっと欲しいかも…」";
+    } else if (currentTotal <= 1500) {
+        comment.innerHTML = "「えへ、いつもありがとうございます！ご依頼も待ってます！」";
+    } else if (currentTotal <= 2500) {
+        comment.innerHTML = "「ありがとうございます！今日は坊ちゃんとステーキ食ってきました！坊ちゃんの奢りで！」";
+    } else if (currentTotal <= 3000) {
+        comment.innerHTML = "「ありがとうございます！さっきすげー綺麗な石見つけました！」";
+    } else if (currentTotal <= 3500) {
+        comment.innerHTML = "「ありがとうございます！わんわん！」";
+    } else if (currentTotal <= 4000) {
+        comment.innerHTML = "「お金持ちさんですか！？ありがとうございます！」";
+    } else if (currentTotal <= 5000) {
+        comment.innerHTML = "「こんだけあれば今夜は高級肉だな！…一緒に食います？」";
+    } else if (currentTotal <= 5500) {
+        comment.innerHTML = "「いつもありがとーございます！！」";
+    } else if (currentTotal <= 6000) {
+        comment.innerHTML = "「また明日もここで待ってます」";
+    } else if (currentTotal <= 6500) {
+        comment.innerHTML = "「こんなにくれるのあなただけですよ！」";
+    } else if (currentTotal <= 7000) {
+        comment.innerHTML = "「代わりにオレのヒミツ教えちゃいますね」";
+    } else if (currentTotal <= 7500) {
+        comment.innerHTML = "「このサイトの🌙、7回タップしてみてください！」";
+    } else if (currentTotal <= 8500) {
+        comment.innerHTML = "「へへ、ちょっと恥ずかしいですね」";
+    } else if (currentTotal <= 9000) {
+        comment.innerHTML = "「いつもありがとうございます♡わんわん！」";
+    } else if (currentTotal <= 10000) {
+        comment.innerHTML = "「…もしかして、オレのこと好きですか…？なんて。冗談です！肉食ってきます！」";
+    } else if (currentTotal <= 10500) {
+        comment.innerHTML = "「いつもありがとーございます♡わんわん！」";
+    } else if (currentTotal <= 20000) {
+        comment.innerHTML = "「こんな構ってくれるのあなただけですよ…いい人ですね！好きになっちゃいそうです」";
+    } else {
+        comment.innerHTML = "「ふぅ…満腹！もうオレ養われちゃってますよね？今日はもう寝ます。…ZZZ…」";
+    }
+
+    // 3. ボタンを無効化
+    const btn = document.getElementById("donate-btn");
+    btn.disabled = true;
+    btn.innerText = "また明日もおねがいします！";
+}
+
+
+
+// ページ読み込み時に状態を復元
+window.onload = () => {
+    document.getElementById("total-amount").innerHTML = parseInt(localStorage.getItem('ibukiTotal') || 0).toLocaleString();
+    updateStatus(); // ステータス更新
+    
+    if (localStorage.getItem('lastDonateDate') === new Date().toLocaleDateString()) {
+        const btn = document.getElementById("donate-btn");
+        btn.disabled = true;
+        btn.innerText = "また明日もおねがいします！";
+    }
+};
+
+
+
+
+const moon = document.getElementById("moon");
+
+let moonCount = 0;
+
+const bone=document.getElementById("bone");
+const message=document.getElementById("message");
+
+const texts=[
+
+"わん！",
+"おやつですか？",
+"いつでも頼ってください！",
+"依頼ですか？",
+"もっとください！",
+"今日のご飯代ください♡",
+"肉食いたい…",
+"お腹空いた",
+"ヒマー",
+"月がキレイ！",
+"どんな依頼もイブキさんにどーぞ！",
+"元気ですかー？",
+"こんにちわん？",
+"坊ちゃ〜〜ん",
+"わんわん",
+];
+
+
+let messageTimer;
+
+const fades = document.querySelectorAll(".fade");
+
+const observer = new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+
+    });
+
+});
+
+fades.forEach(el=>observer.observe(el));
+
+
+
+bone.onclick = () => {
+
+    // 前のタイマーをキャンセル
+    clearTimeout(messageTimer);
+
+    message.style.display = "block";
+
+    message.innerHTML = texts[Math.floor(Math.random() * texts.length)];
+
+    // 新しく4秒後に消えるタイマーを作る
+    messageTimer = setTimeout(() => {
+
+        message.style.display = "none";
+
+    }, 4000);
+
+}
+
+moon.onclick = () => {
+
+    moonCount++;
+
+    if(moonCount == 3){
+        message.style.display = "block";
+        message.innerHTML = "……？";
+        setTimeout(()=>message.style.display="none",2500);
+    }
+
+    if(moonCount == 5){
+        message.style.display = "block";
+        message.innerHTML = "そんなに月が好きなんですか？";
+        setTimeout(()=>message.style.display="none",3000);
+    }
+
+    if(moonCount >= 7){
+        location.href = "secret.html";
+    }
+
+}
+
+
+
+// 時間判定でステータスを切り替える
+function updateStatus() {
+    const statusText = document.querySelector(".status");
+    const dot = document.querySelector(".dot");
+    const now = new Date();
+    const hour = now.getHours();
+    if (hour >= 22 || hour < 5) {
+    document.body.classList.add("night-mode");
+}
+
+    // 例：深夜2時〜朝7時は「寝てる（OFFLINE）」、それ以外は「活動中（ONLINE）」
+    if (hour >= 2 && hour < 7) {
+        statusText.innerHTML = '<span class="dot" style="background:#555; box-shadow:none; animation:none;"></span>OFFLINE (ZZZ...)';
+    } else {
+        statusText.innerHTML = '<span class="dot"></span>ONLINE';
+    }
+}
+
+// ページ読み込み時に実行
+updateStatus();
+
+
+let idleTimer = setTimeout(() => {
+    message.style.display = "block";
+    message.innerHTML = "…ひまだなー。何か依頼ないですか？";
+    setTimeout(() => message.style.display = "none", 4000);
+}, 30000); 
+// 30秒放置で発動
+
+// スクロールやクリックをしたらタイマーをリセット
+window.onmousemove = window.onclick = () => {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+        message.style.display = "block";
+        message.innerHTML = "……ZZZ…（お昼寝中）";
+        setTimeout(() => message.style.display = "none", 4000);
+    }, 30000);
+};
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
